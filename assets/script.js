@@ -1,9 +1,10 @@
 // Assignment Code
-var generateBtn = document.querySelector("#generate");
-var passwordTextArea = document.getElementById("password");
-var clearBtn = document.getElementById("clear");
+const generateBtn = document.querySelector("#generate");
+const passwordTextArea = document.getElementById("password");
+const clearBtn = document.getElementById("clear");
 
-var passwordCriteria = {
+//object holds the selected password criteria
+let passwordCriteria = {
     length : 0,
     lowerCase: false,
     upperCase: false,
@@ -15,7 +16,7 @@ var passwordCriteria = {
 function isValidNumber(numToTest) {
     if (!numToTest) {
         //cannot be blank
-        return falsse;
+        return false;
     } else if (typeof numToTest != 'number' || Number.isNaN(numToTest)) {
         //must be a number
         return false;
@@ -28,86 +29,37 @@ function isValidNumber(numToTest) {
 
 //get password length and validate it
 function getPasswordLength() {
-    var chosenLength = prompt("Please enter the password length (between 8 and 128 characters).");
-    if (chosenLength != null){
-        if (!isValidNumber(+chosenLength)) {
-            //not valid so tell user and ask for length again
-            alert("Please enter a valid number between 8 and 128 characters.");
-            getPasswordLength();
-        } else {
-            //set password length in passwordCriteria object
-            passwordCriteria.length = +chosenLength;
-        }   
-        return true;    
+    const chosenLength = prompt("Please enter the password length (between 8 and 128 characters).");
+    //check if user clicked cancel i.e. dont want to proceed
+    if (typeof(chosenLength) == "object"){
+        return false;
     }
-    return false;
-}
+    //check is user entered blank value
+    if (chosenLength.length == 0) {
+        return getPasswordLength();
+    } 
+    if (!isValidNumber(+chosenLength)) {
+         //not valid so tell user and ask for length again
+        return getPasswordLength();
+    } 
+    //set password length in passwordCriteria object
+    passwordCriteria.length = +chosenLength;
+    return true;
+}     
 
-//ask user if they want uppercase in password and store
-//result in passwordCriteria
-function getUpperCase() {
-    var chosenUppCase = confirm("Would you like to include UPPER CASE characters in the password?\nClick 'OK for yes and 'Cancel' for no.");
-    if (chosenUppCase) {
-        passwordCriteria.upperCase = true;
-    } else {
-        passwordCriteria.upperCase = false;
-    }
-}
-
-//ask user if they want lowercase in password and store
-//result in passwordCriteria
-function getLowerCase() {
-    var chosenLowerCase = confirm("Would you like to include LOWER CASE characters in the password?\nClick 'OK for yes and 'Cancel' for no.");
-    if (chosenLowerCase) {
-        passwordCriteria.lowerCase = true;
-    } else {
-        passwordCriteria.lowerCase = false;
-    }
-}
-
-//ask user if they want numbers in password and store
-//result in passwordCriteria
-function getNumeric() {
-    var chosenNumeric = confirm("Would you like to include NUMERIC characters in the password?\nClick 'OK for yes and 'Cancel' for no.");
-    if (chosenNumeric) {
-        passwordCriteria.numeric = true;
-    } else {
-        passwordCriteria.numeric = false;
-    }
-}
-
-//ask user if they want special characters in password and store
-//result in passwordCriteria
-function getSpecialChars() {
-    var chosenSpecChars = confirm("Would you like to include SPECIAL characters in the password?\nClick 'OK for yes and 'Cancel' for no.");
-    if (chosenSpecChars) {
-        passwordCriteria.specialChars = true;
-    } else {
-        passwordCriteria.specialChars = false;
-    }
-}
 
 //Actually get the password criteria details from user
-function getPasswordCriteria() {
-    //clear any previous selections
-    for (var key in passwordCriteria) {
-          delete passwordCriteria[key];
-    }
+function getPasswordCriteria() {    
+    passwordCriteria.upperCase = confirm("Would you like to include UPPER CASE characters in the password?\nClick 'OK for yes and 'Cancel' for no.");
+    passwordCriteria.lowerCase = confirm("Would you like to include LOWER CASE characters in the password?\nClick 'OK for yes and 'Cancel' for no.");
+    passwordCriteria.numeric = confirm("Would you like to include NUMERIC characters in the password?\nClick 'OK for yes and 'Cancel' for no.");
+    passwordCriteria.specialChars = confirm("Would you like to include SPECIAL characters in the password?\nClick 'OK for yes and 'Cancel' for no.");
 
-//only proceed with other criteria if password length passes validation
-    if (getPasswordLength()){
-        getUpperCase();
-        getLowerCase();
-        getNumeric();
-        getSpecialChars();
-
-        //ensure at least one type of criteria is chosen - otherwise cat generate password
-        if (!passwordCriteria.lowerCase && !passwordCriteria.upperCase && !passwordCriteria.numeric && !passwordCriteria.specialChars) {
-            alert("You must select at least one of lower case, upper case, numeric or special characters.");
-            getPasswordCriteria();
-        }
+    //ensure at least one type of criteria is chosen - otherwise cant generate password
+    if (!passwordCriteria.lowerCase && !passwordCriteria.upperCase && !passwordCriteria.numeric && !passwordCriteria.specialChars) {
+        alert("You must select at least one of lower case, upper case, numeric or special characters.");
+        return getPasswordCriteria();
     }
-    
 }
 
 //swap order of characters in password
@@ -129,11 +81,11 @@ function shuffle(strOrig) {
 //generate password ensuring all chosen criteria are included in password
 function generatePassword() {
     //set up variables for use when generating password
-    var letters = "abcdefghijklmnopqrstuvwxyz";
-    var nums = "0123456789";
-    var specials = " !#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
+    const letters = "abcdefghijklmnopqrstuvwxyz";
+    const nums = "0123456789";
+    let specials = " !#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
 
-    //could not include double quotes in string above so added to 'speccials' using append
+    //could not include double quotes in string above so added to 'specials' using append
     specials = specials.concat('"');
     var password = "";
     var i = 0;
@@ -142,51 +94,56 @@ function generatePassword() {
     //each time through loop check what criteria were chosen and include chosen ones in password
     //this ensures each chosen criteria is included
     while (i < passwordCriteria.length) {
-        if (passwordCriteria.lowerCase) {
+        if (passwordCriteria.lowerCase && i < passwordCriteria.length) {
             password = password + letters[Math.floor(Math.random() * letters.length)];
             i++;
         }
     
-        if (passwordCriteria.upperCase) {
+        if (passwordCriteria.upperCase && i < passwordCriteria.length) {
             password = password + letters[Math.floor(Math.random() * letters.length)].toUpperCase();
             i++;
         }
     
-        if (passwordCriteria.numeric) {
+        if (passwordCriteria.numeric && i < passwordCriteria.length) {
             password = password + nums[Math.floor(Math.random() * nums.length)];
             i++;
         }
 
-        if (passwordCriteria.specialChars) {
+        if (passwordCriteria.specialChars && i < passwordCriteria.length) {
             password = password + specials[Math.floor(Math.random() * specials.length)];
             i++;
         }
     }
     //swap order of characters in password - avoids a pattern of lowercase, uppercase, numeric, special
-    //also slice off at chosen password length as password may be longer than requested at this stage
-    //because increment i several times in while loop above
-    password = shuffle(password.slice(0, passwordCriteria.length));
+    //based on shuffle function from stackoverflow - Andy E
+    password = shuffle(password);
     return password;
     
 }
 
 // Write password to the #password input field
 function writePassword() {
-    var password;
-    var passwordText = document.querySelector("#password");
-    var copyText = document.getElementById("copy-text");
-    getPasswordCriteria();
-    password = generatePassword();
-    passwordText.value = password;
-    copyText.textContent = "Select password to copy it to clipboard."
+    const copyText = document.getElementById("copy-text");
+    //clear any previous selections
+    for (var key in passwordCriteria) {
+        delete passwordCriteria[key];
+    }
 
+    //check password length before proceeding with other criteria
+    //length must be valid and check user did not click cancel i.e dont want to proceed
+    if (getPasswordLength()) {
+        getPasswordCriteria();
+        passwordTextArea.value = generatePassword();
+        //just tell user they can copy to clipboard
+        copyText.textContent = "Select password to copy it to clipboard."
+    }
 }
 
 //selects the text in the password field and copies it to the clipboard
 //makes it easier to paste somewhere else
 function copyText() {
     // Get the text field
-    var copyText = document.getElementById("password");
+    const copyText = document.getElementById("password");
     if (copyText.value) {
         // Select the text field
         copyText.select();
@@ -203,7 +160,7 @@ function copyText() {
 
   //clear password if user does not want it displayed on screen anymore
   function clearPassword(){
-    var copyText = document.getElementById("copy-text");
+    const copyText = document.getElementById("copy-text");
     document.getElementById("password").value = '';
     copyText.textContent = ""
   }
