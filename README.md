@@ -27,7 +27,7 @@ Below is a screenshot of the webpage.
 
 ![Image](./assets/images/password-generator.jpg?raw=true "Screenshot")
 
-[To view my portfolio website click here.](https://helenelee.github.io/password-generator/)
+[To view the password generator webpage click here.](https://helenelee.github.io/password-generator/)
 
 
 ## Credits
