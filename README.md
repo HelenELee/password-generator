@@ -5,11 +5,12 @@ This web page was developed to allow employers to generate a random passwords ba
 
 The password generator is developed using a combination of HTML, CSS and Javascript.
 Noteworthy features are:
-Event listeners
-General input and number validation from prompt/confirm
-Math.random to get random elements from string
-Copy to clipboard
-Shuffle characters in string
+*Event listeners
+*General input and number validation from prompt/confirm
+*Math.random to get random elements from string
+*Copy to clipboard
+*Shuffle characters in string
+*Use of Object to store password criteria
 
 
 The main challenges were with creating a simple user interface, ensuring the user experience was intuitive and covered all user needs.
