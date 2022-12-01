@@ -5,10 +5,14 @@ This web page was developed to allow employers to generate a random passwords ba
 
 The password generator is developed using a combination of HTML, CSS and Javascript.
 Noteworthy features are:
-event listener
+Event listeners
+General input and number validation from prompt/confirm
+Math.random to get random elements from string
+Copy to clipboard
+Shuffle characters in string
 
 
-The main challenges were with layout and ensuring the web page was usable at various screen sizes. Flex and media queries were used to achieve this.
+The main challenges were with creating a simple user interface, ensuring the user experience was intuitive and covered all user needs.
 
 ## Installation
 
@@ -16,20 +20,18 @@ N/A
 
 ## Usage
 
-Please read the comments in index.html and style.css files to see the explanation for design choices.
+Please read the comments in script.js file to see the explanation of how the code works. To create a password click on the "Generate Password" button and follow the prompts. To clear the password from the screen click on the "Clear" button. To copy the password to the clipboard once its been generated, click on the password and it will be copied automatically.
 
-You can click on each icon in the "work" area to view my work.
+Below is a screenshot of the webpage. 
 
-Below is a screenshot of the website. 
+![Image](./assets/images/password-generator.jpg?raw=true "Screenshot")
 
-![Image](./assets/images/HelenLeePortfolio.png?raw=true "Screenshot")
-
-[To view my portfolio website click here.](https://helenelee.github.io/helen-lee-portfolio/)
+[To view my portfolio website click here.](https://helenelee.github.io/password-generator/)
 
 
 ## Credits
 
-Would like to thank the instructors at UWA Bootcamp. I obtained free images from unsplash.com - thanks to Claudio Swartz, Ferenc Almasi, Kobu Agency for the images.
+Would like to thank the instructors at UWA Bootcamp. I used a modified version of a shuffle function from Andy E at StackOverFlow.
 
 ## License
 
