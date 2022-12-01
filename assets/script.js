@@ -1,4 +1,4 @@
-// Assignment Code
+// Get HTML elements
 const generateBtn = document.querySelector("#generate");
 const passwordTextArea = document.getElementById("password");
 const clearBtn = document.getElementById("clear");
@@ -63,7 +63,7 @@ function getPasswordCriteria() {
 }
 
 //swap order of characters in password
-//avoids a pattern of lowercase, uppercase, numeric, special
+//avoids a pattern of lowercase, uppercase, numeric, special....repeat
 function shuffle(strOrig) {
     var strArray = strOrig.split("");
     var arrayLength = strArray.length;
